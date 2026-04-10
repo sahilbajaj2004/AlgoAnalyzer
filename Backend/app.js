@@ -7,10 +7,17 @@ const algorithmRoutes = require('./src/routes/algorithms');
 
 const app = express();
 
-const allowedOrigins = [
+const defaultOrigins = [
   'http://localhost:5173',
   'https://algo-analyzer.vercel.app'
 ];
+
+const extraOrigins = (process.env.FRONTEND_URLS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [...new Set([...defaultOrigins, ...extraOrigins])];
 
 app.use(cors({
   origin: allowedOrigins
