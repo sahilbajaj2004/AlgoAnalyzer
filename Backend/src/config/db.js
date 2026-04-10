@@ -3,6 +3,20 @@ require('dotenv').config();
 
 const ipv4Only = { family: 4 };
 
+function getSanitizedDatabaseUrl() {
+  const raw = process.env.DATABASE_URL;
+  if (!raw) return raw;
+
+  try {
+    const url = new URL(raw);
+    url.searchParams.delete('sslmode');
+    url.searchParams.delete('ssl');
+    return url.toString();
+  } catch (err) {
+    return raw;
+  }
+}
+
 function getDbTargetInfo() {
   if (process.env.DATABASE_URL) {
     try {
@@ -36,7 +50,7 @@ console.log(`[DB] mode=${dbTarget.mode} user=${dbTarget.user} target=${dbTarget.
 
 const pool = process.env.DATABASE_URL
   ? new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: getSanitizedDatabaseUrl(),
       ...ipv4Only,
       ssl: {
         rejectUnauthorized: false,
