@@ -3,6 +3,16 @@ require('dotenv').config();
 
 const ipv4Only = { family: 4 };
 
+function hasExplicitPgConfig() {
+  return Boolean(
+    process.env.PGHOST &&
+      process.env.PGPORT &&
+      process.env.PGDATABASE &&
+      process.env.PGUSER &&
+      process.env.PGPASSWORD
+  );
+}
+
 function getSanitizedDatabaseUrl() {
   const raw = process.env.DATABASE_URL;
   if (!raw) return raw;
@@ -18,6 +28,15 @@ function getSanitizedDatabaseUrl() {
 }
 
 function getDbTargetInfo() {
+  if (hasExplicitPgConfig()) {
+    return {
+      mode: 'PG_VARS',
+      user: process.env.PGUSER,
+      host: process.env.PGHOST,
+      port: process.env.PGPORT,
+    };
+  }
+
   if (process.env.DATABASE_URL) {
     try {
       const url = new URL(process.env.DATABASE_URL);
@@ -48,7 +67,19 @@ function getDbTargetInfo() {
 const dbTarget = getDbTargetInfo();
 console.log(`[DB] mode=${dbTarget.mode} user=${dbTarget.user} target=${dbTarget.host}:${dbTarget.port}`);
 
-const pool = process.env.DATABASE_URL
+const pool = hasExplicitPgConfig()
+  ? new Pool({
+      ...ipv4Only,
+      host: process.env.PGHOST,
+      port: process.env.PGPORT,
+      database: process.env.PGDATABASE,
+      user: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    })
+  : process.env.DATABASE_URL
   ? new Pool({
       connectionString: getSanitizedDatabaseUrl(),
       ...ipv4Only,
