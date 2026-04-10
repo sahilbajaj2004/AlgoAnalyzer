@@ -9,12 +9,14 @@ function getDbTargetInfo() {
       const url = new URL(process.env.DATABASE_URL);
       return {
         mode: 'DATABASE_URL',
+        user: url.username || 'missing',
         host: url.hostname,
         port: url.port || '5432',
       };
     } catch (err) {
       return {
         mode: 'DATABASE_URL_INVALID',
+        user: 'invalid',
         host: 'invalid',
         port: 'invalid',
       };
@@ -23,13 +25,14 @@ function getDbTargetInfo() {
 
   return {
     mode: 'DB_HOST',
+    user: process.env.DB_USER || 'missing',
     host: process.env.DB_HOST || 'missing',
     port: process.env.DB_PORT || '5432',
   };
 }
 
 const dbTarget = getDbTargetInfo();
-console.log(`[DB] mode=${dbTarget.mode} target=${dbTarget.host}:${dbTarget.port}`);
+console.log(`[DB] mode=${dbTarget.mode} user=${dbTarget.user} target=${dbTarget.host}:${dbTarget.port}`);
 
 const pool = process.env.DATABASE_URL
   ? new Pool({
