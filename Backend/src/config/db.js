@@ -3,6 +3,34 @@ require('dotenv').config();
 
 const ipv4Only = { family: 4 };
 
+function getDbTargetInfo() {
+  if (process.env.DATABASE_URL) {
+    try {
+      const url = new URL(process.env.DATABASE_URL);
+      return {
+        mode: 'DATABASE_URL',
+        host: url.hostname,
+        port: url.port || '5432',
+      };
+    } catch (err) {
+      return {
+        mode: 'DATABASE_URL_INVALID',
+        host: 'invalid',
+        port: 'invalid',
+      };
+    }
+  }
+
+  return {
+    mode: 'DB_HOST',
+    host: process.env.DB_HOST || 'missing',
+    port: process.env.DB_PORT || '5432',
+  };
+}
+
+const dbTarget = getDbTargetInfo();
+console.log(`[DB] mode=${dbTarget.mode} target=${dbTarget.host}:${dbTarget.port}`);
+
 const pool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
