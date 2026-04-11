@@ -93,7 +93,7 @@ function Navbar({ onMenuClick }) {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
           <span className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-sm group-hover:bg-violet-700 transition-colors">
-            S
+            A
           </span>
           <span className="font-bold tracking-tight text-lg" style={{ color: 'var(--text-primary)' }}>AlgoAnalyzer</span>
         </Link>
