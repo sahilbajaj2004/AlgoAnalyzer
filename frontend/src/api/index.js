@@ -1,7 +1,22 @@
 import axios from 'axios';
 
+const rawBaseUrl = (import.meta.env.VITE_API_URL || '').trim();
+
+const normalizedBaseUrl = (() => {
+  if (!rawBaseUrl) {
+    return import.meta.env.DEV
+      ? 'http://localhost:5000/api'
+      : 'https://algoanalyzer.onrender.com/api';
+  }
+
+  const withoutTrailingSlash = rawBaseUrl.replace(/\/+$/, '');
+  return withoutTrailingSlash.endsWith('/api')
+    ? withoutTrailingSlash
+    : `${withoutTrailingSlash}/api`;
+})();
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL: normalizedBaseUrl
 });
 
 export const getAllAlgorithms = () => api.get('/algorithms');

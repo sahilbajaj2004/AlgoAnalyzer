@@ -29,6 +29,10 @@ app.use('/api/algorithms', algorithmRoutes);
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api', require('./src/routes/Analyzev2route'));
 
+// Backward-compatible aliases for clients still calling root-level routes.
+app.use('/algorithms', algorithmRoutes);
+app.use('/', require('./src/routes/Analyzev2route'));
+
 app.get('/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
