@@ -82,14 +82,22 @@ function Navbar({ onMenuClick }) {
   )
 
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b"
-      style={{
-        background: isDark ? 'rgba(3,7,18,0.75)' : 'rgba(255,255,255,0.82)',
-        borderColor: 'var(--border)',
-      }}
-    >
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3">
+    <>
+      <div className="announcement-bar" role="status" aria-live="polite">
+        <div className="announcement-track">
+          <span className="announcement-marquee">
+            Free plan khatam ho gaya, toh please source code apne PC par download karke use karein.
+          </span>
+        </div>
+      </div>
+      <nav
+        className="fixed left-0 right-0 z-50 backdrop-blur-md border-b app-navbar"
+        style={{
+          background: isDark ? 'rgba(3,7,18,0.75)' : 'rgba(255,255,255,0.82)',
+          borderColor: 'var(--border)',
+        }}
+      >
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
           <span className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-sm group-hover:bg-violet-700 transition-colors">
@@ -163,7 +171,8 @@ function Navbar({ onMenuClick }) {
           )}
         </div>
       )}
-    </nav>
+      </nav>
+    </>
   )
 }
 

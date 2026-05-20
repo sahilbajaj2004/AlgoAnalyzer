@@ -115,6 +115,52 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ── Announcement marquee ────────────────────────────────────── */
+:root {
+  --announcement-height: 24px;
+}
+
+.announcement-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--announcement-height);
+  z-index: 60;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+}
+
+.announcement-track {
+  width: 100%;
+  overflow: hidden;
+}
+
+.announcement-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: announcement-marquee 18s linear infinite;
+}
+
+.app-navbar {
+  top: var(--announcement-height);
+}
+
+@keyframes announcement-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 /* ── Scrollbar utility ────────────────────────────────────────── */
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
