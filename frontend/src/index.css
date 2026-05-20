@@ -142,24 +142,72 @@ body {
 }
 
 .announcement-marquee {
-  display: inline-block;
+  display: block;
   white-space: nowrap;
-  padding-left: 100%;
-  animation: announcement-marquee 18s linear infinite;
+  text-align: center;
+  padding: 0 12px;
+  animation: none;
 }
 
 .app-navbar {
   top: var(--announcement-height);
 }
 
-@keyframes announcement-marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+/* ── Announcement modal ─────────────────────────────────────── */
+.announcement-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
 }
+
+.announcement-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.announcement-modal__content {
+  position: relative;
+  width: min(520px, 92vw);
+  border-radius: 16px;
+  padding: 20px 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.announcement-modal__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.announcement-modal__text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.announcement-modal__button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--accent-bg-light);
+  color: var(--accent-text);
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.announcement-modal__button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
 
 /* ── Scrollbar utility ────────────────────────────────────────── */
 @layer utilities {

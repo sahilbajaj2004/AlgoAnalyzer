@@ -86,7 +86,7 @@ function Navbar({ onMenuClick }) {
       <div className="announcement-bar" role="status" aria-live="polite">
         <div className="announcement-track">
           <span className="announcement-marquee">
-            Free plan khatam ho gaya, toh please source code apne PC par download karke use karein.
+            Free backend deployment plan khatam ho gaya, toh please source code apne PC par download karke use karein.
           </span>
         </div>
       </div>
