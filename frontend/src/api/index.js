@@ -4,9 +4,7 @@ const rawBaseUrl = (import.meta.env.VITE_API_URL || '').trim();
 
 const normalizedBaseUrl = (() => {
   if (!rawBaseUrl) {
-    return import.meta.env.DEV
-      ? 'http://localhost:5000/api'
-      : 'https://algoanalyzer.onrender.com/api';
+    return 'https://algoanalyzer.onrender.com/api';
   }
 
   const withoutTrailingSlash = rawBaseUrl.replace(/\/+$/, '');
